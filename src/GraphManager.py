@@ -1,29 +1,24 @@
 import string
-import random
-from itertools import product
 
 import networkx as nx
 import matplotlib.pyplot as plt
 
 
-class GraphManager(object):
+from .Database import Database
 
+
+class GraphManager(Database):
     def __init__(self):
-        self.letters = [l for l in string.ascii_lowercase]
-        self.word_size = 2
+        self.available_letters = [l for l in string.ascii_lowercase]
+        self.greed = {l: i for i, l in enumerate(self.available_letters)}
         self.G = nx.Graph()
+        super(GraphManager, self)
 
-    def __generate_words(self, words_number):
-        comb = product(self.letters, repeat=self.word_size)
-        words = [''.join(c) for c in comb]
-        return [random.choice(words) for _ in range(words_number)]
-
-    def __generate_nodes(self, nodes_num):
-        greed = {l: i for i, l in enumerate(self.letters)}
+    def __generate_nodes(self):
         nodes = {}
-        words = self.__generate_words(words_number=nodes_num)
+        words = super()._get_all_words()
         for w in words:
-            nodes[w] = (greed[w[0]], greed[w[1]])
+            nodes[w] = (self.greed[w[0]], self.greed[w[1]])
         return nodes
 
     def __add_nodes(self, nodes):
@@ -42,8 +37,8 @@ class GraphManager(object):
                     ages.append((n1, n2))
         self.G.add_edges_from(ages)
 
-    def draw_graph(self, nodes_num):
-        nodes = self.__generate_nodes(nodes_num)
+    def draw_graph(self):
+        nodes = self.__generate_nodes()
         self.__add_nodes(nodes=nodes)
         self.__add_ages(nodes=nodes)
         nx.draw(self.G, nodes, with_labels=True, font_weight='bold')
