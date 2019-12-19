@@ -4,15 +4,15 @@ import matplotlib.pyplot as plt
 import string
 from itertools import product
 
-def show3dgraph(n_nodes):
-    ### Блок с генерацией слов
+def generate_words(n_nodes):
     letters = [l for l in string.ascii_lowercase]
     word_size = 3
     comb = product(letters, repeat=word_size)
     words = [''.join(c) for c in comb]
     wrds = [random.choice(words) for _ in range(n_nodes)]
-    ###
+    return wrds
 
+def show3dgraph(wrds):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
@@ -41,4 +41,4 @@ def show3dgraph(n_nodes):
 
     plt.show()
 
-show3dgraph(20)
+show3dgraph(generate_words(20))
