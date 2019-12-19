@@ -15,3 +15,5 @@ PG_CONN = {
     'password': os.environ.get('PG_PASSWORD'),
     'autorollback': True,
 }
+
+WINDOW_SIZE = '700x1500'
