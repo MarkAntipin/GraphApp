@@ -1,11 +1,12 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-
-from .Database import Database
+from src.Database import Database
 
 
 class GraphManager(Database):
+    words_available_sizes = 2
+
     def __init__(self):
         self.greed = {l: i for i, l in enumerate(self.available_letters)}
         self.G = nx.Graph()
@@ -13,7 +14,7 @@ class GraphManager(Database):
 
     def __generate_nodes(self) -> dict:
         nodes = {}
-        words = super().get_all_words()
+        words = super().get_words(word_length=self.words_available_sizes)
         for w in words:
             nodes[w] = (self.greed[w[0]], self.greed[w[1]])
         return nodes

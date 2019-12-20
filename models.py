@@ -1,6 +1,6 @@
 import peeweedbevolve
 from peewee import (
-    Model, AutoField, CharField
+    Model, AutoField, CharField, IntegerField
 )
 from playhouse.shortcuts import model_to_dict
 from playhouse.postgres_ext import PostgresqlExtDatabase, ArrayField
@@ -21,7 +21,8 @@ class BaseModel(Model):
 
 class Words(BaseModel):
     id = AutoField(index=True, primary_key=True)
-    word = CharField(index=True, unique=True, max_length=2)
+    word = CharField(index=True, unique=True)
+    word_length = IntegerField()
 
 
 if __name__ == '__main__':

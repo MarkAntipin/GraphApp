@@ -1,7 +1,8 @@
 from .Database import Database
-from .GraphManager import GraphManager
+
+
+database = Database()
 
 __all__ = [
-    'Database',
-    'GraphManager'
+    'database',
 ]
